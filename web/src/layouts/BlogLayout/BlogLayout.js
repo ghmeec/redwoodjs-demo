@@ -1,10 +1,13 @@
-import { Link, routes } from '@redwoodjs/router'
+import { Link, routes,usePageLoadingContext } from '@redwoodjs/router'
 
 const BlogLayout = ({ children }) => {
+  const {loading}=usePageLoadingContext()
+  console.log("Loading ",loading)
   return (
-    <>
+
+    <div className="bg-gray-300 text-gray-700">
       <header>
-        <h1>New Blog Layout </h1>
+        <h1 className="">Redwood JS Blog Test </h1>
         <nav>
           <ul>
             <li>
@@ -22,8 +25,15 @@ const BlogLayout = ({ children }) => {
           </ul>
         </nav>
       </header>
-      <main>{children}</main>
-    </>
+
+      <main className="mx-40 pb-4">
+        <div>
+          {loading&&  <div>Spinner in here</div>}
+          </div>
+          <div>
+            {children}</div>
+            </main>
+    </div>
   )
 }
 

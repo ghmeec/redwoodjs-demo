@@ -61,13 +61,13 @@ const ContactPage = (props) => {
           Email
         </Label>
         <TextField
-  name="email"
-  style={{ display: 'block' }}
-  errorStyle={{ display: 'block', borderColor: 'red' }}
-  validation={{
-    required: true,
-  }}
-/>
+          name="email"
+          style={{ display: 'block' }}
+          errorStyle={{ display: 'block', borderColor: 'red' }}
+          validation={{
+            required: true,
+          }}
+        />
         <FieldError name="email" style={{ color: 'red' }} />
 
         <Label
