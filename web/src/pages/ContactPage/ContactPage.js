@@ -6,9 +6,11 @@ import {
   Submit,
   FieldError,
   Label,
-  useMutation
+  useMutation,
 } from '@redwoodjs/web'
+
 import BlogLayout from 'src/layouts/BlogLayout'
+var useForm = require("react-hook-form").useForm;
 
 const CREATE_CONTACT = gql`
   mutation CreateContactMutation($input: ContactInput!) {
@@ -24,69 +26,38 @@ const ContactPage = (props) => {
       alert('Thank you for your submission!')
     },
   })
+
+
+  console.log("Register here ", useForm())
+  // extending react hook form manually
+  const { register, handleSubmit, watch, errors } = useForm()
   const onSubmit = (data) => {
+
     console.log(data)
     create({ variables: { input: data } })
   }
 
+  const customFormHandler = (data) => {
+    console.log("Form handling ", data)
+  }
   return (
     <BlogLayout>
-      <Form onSubmit={onSubmit} validation={{ mode: 'onBlur' }}>
-        {error && (
-          <div style={{ color: 'red' }}>
-            {"We couldn't send your message: "}
-            {error.message}
-          </div>
-        )}
-        <Label
-          name="name"
-          style={{ display: 'block' }}
-          errorStyle={{ display: 'block', color: 'red' }}
-        >
-          Name
-        </Label>
-        <TextField
-          name="name"
-          style={{ display: 'block' }}
-          errorStyle={{ display: 'block', borderColor: 'red' }}
-          validation={{ required: true }}
-        />
-        <FieldError name="name" style={{ color: 'red' }} />
+      <form onSubmit={handleSubmit(customFormHandler)}
 
-        <Label
-          name="email"
-          style={{ display: 'block' }}
-          errorStyle={{ display: 'block', color: 'red' }}
+      >
+        <input name="i1" ref={register} /><br />
+        <input name="i2" ref={register} /><br />
+        <select id="cars" name="carlist"
+          ref={register}
         >
-          Email
-        </Label>
-        <TextField
-          name="email"
-          style={{ display: 'block' }}
-          errorStyle={{ display: 'block', borderColor: 'red' }}
-          validation={{
-            required: true,
-          }}
-        />
-        <FieldError name="email" style={{ color: 'red' }} />
 
-        <Label
-          name="message"
-          style={{ display: 'block' }}
-          errorStyle={{ display: 'block', color: 'red' }}
-        >
-          Message
-        </Label>
-        <TextAreaField
-          name="message"
-          style={{ display: 'block' }}
-          errorStyle={{ display: 'block', borderColor: 'red' }}
-          validation={{ required: true }}
-        />
-        <FieldError name="message" style={{ color: 'red' }} />
-
-        <Submit style={{ display: 'block' }} disabled={loading}>Save</Submit>
-      </Form>
+          <option value="volvo">Volvo</option>
+          <option value="saab">Saab</option>
+          <option value="opel">Opel</option>
+          <option value="audi">Audi</option>
+        </select>
+        <input type="submit" />
+      </form>
     </BlogLayout>
   )
 }
